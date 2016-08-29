@@ -28,8 +28,8 @@ def imprimeMatriz(matriz):
 
 
 def somaMatrizes(matriz1, matriz2):
-    if len(matriz1) > len(matriz2) or len(matriz2) > len(matriz1) or len(matriz1[0]) > len(matriz2[0]) or len(
-            matriz2[0]) > len(matriz1[0]):
+    if len(matriz1) > len(matriz2) or len(matriz2) > len(matriz1) or \
+                    len(matriz1[0]) > len(matriz2[0]) or len(matriz2[0]) > len(matriz1[0]):
         return None
 
     aux = matriz1
@@ -44,7 +44,16 @@ def somaMatrizes(matriz1, matriz2):
 
 # TODO: Implementar função de multiplicação de matrizes
 def multiplicaMatrizes(matriz1, matriz2):
-    return 'Não implementado'
+    linhas = len(matriz1)
+    colunas = len(matriz1[0])
+    aux = matriz1
+    for i in range(linhas):
+        for j in range(colunas):
+            val = 0
+            for k in range(len(matriz2)):
+                val += matriz1[i][k] * matriz2[k][j]
+            aux[i][j] = val
+    return aux
 
 
 matriz1 = criaMatriz(l1, c1, L, H)
