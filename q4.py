@@ -18,12 +18,19 @@ def criadorDeVetor(tamanhoVetor, minimo, maximo):
 
 # Função que busca valores mínimo e máximo não duplicados no vetor
 def buscarMinMax(vetor):
-    unicos = set(vetor) - buscaDuplicados(vetor)
+    unicos = list(set(vetor) - buscaDuplicados(vetor))
+
+    minimo = []
+    maximo = []
+
     if len(unicos) == 0:
         return (None, None)
 
-    minimo = min(unicos)
-    maximo = max(unicos)
+    for i in range(0, len(unicos) -1 ):
+        if minimo > unicos[i]:
+            minimo = unicos[i]
+        elif maximo < unicos[i]:
+            maximo = unicos[i]
     return (minimo, maximo)
 
 
