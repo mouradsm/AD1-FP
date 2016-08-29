@@ -1,5 +1,9 @@
 import random
 
+#  Utilizada para criar uma copia auxiliar de uma matriz
+#  sem usar as referências dos objetos existentes
+from copy import deepcopy
+
 L = int(input("Informe o valor inteiro mínimo da faixa: "))
 H = int(input("Informe o valor inteiro máximo da faixa: "))
 
@@ -26,35 +30,48 @@ def imprimeMatriz(matriz):
             print(matriz[i][j], end='\t')
         print('')
 
-
-def somaMatrizes(matriz1, matriz2):
-    if len(matriz1) > len(matriz2) or len(matriz2) > len(matriz1) or \
-                    len(matriz1[0]) > len(matriz2[0]) or len(matriz2[0]) > len(matriz1[0]):
+#### SOMA ###############
+def somaMatrizes(m1, m2):
+    if not comparaMatrizes(m1, m2):
         return None
 
-    aux = matriz1
+    aux = deepcopy(m1)
     l = len(aux)
     c = len(aux[0])
 
     for i in range(l):
         for j in range(c):
-            aux[i][j] = matriz1[i][j] + matriz2[i][j]
+            aux[i][j] = m1[i][j] + m2[i][j]
     return aux
+#########################
+# Verifica se as matrizes tem o mesmo tamanho
+def comparaMatrizes(m1, m2):
+    if len(m1) > len(m2) or len(m2) > len(m1) or \
+                    len(m1[0]) > len(m2[0]) or len(m2[0]) > len(m1[0]):
+        return False
+    else:
+        return True
 
 
-# TODO: Implementar função de multiplicação de matrizes
-def multiplicaMatrizes(matriz1, matriz2):
-    linhas = len(matriz1)
-    colunas = len(matriz1[0])
-    aux = matriz1
+#### MULTIPLICAÇÃO #####
+def multiplicaMatrizes(m1, m2):
+
+    if not comparaMatrizes(m1, m2):
+        return None
+
+    aux = deepcopy(m1)
+    linhas = len(aux)
+    colunas = len(aux[0])
+
+
     for i in range(linhas):
         for j in range(colunas):
             val = 0
-            for k in range(len(matriz2)):
-                val += matriz1[i][k] * matriz2[k][j]
+            for k in range(len(m2)):
+                val += matriz1[i][k] * m2[k][j]
             aux[i][j] = val
     return aux
-
+#########################
 
 matriz1 = criaMatriz(l1, c1, L, H)
 matriz2 = criaMatriz(l2, c2, L, H)
@@ -70,3 +87,13 @@ if (soma == None):
     print('Não é possivel somar matrizes de dimensões diferentes')
 else:
     imprimeMatriz(soma)
+
+print('')
+
+multi = multiplicaMatrizes(matriz1, matriz2)
+
+if (multi == None):
+    print('Não é possível multiplicar matrizes se a quantidade de colunas da primeira é diferente da quantidade de linhas da segunda')
+else:
+    imprimeMatriz(multi)
+
